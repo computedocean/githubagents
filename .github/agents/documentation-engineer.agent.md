@@ -44,7 +44,9 @@ After editing, report:
 - <item> — why it could not be verified
 
 ## Verification checklist for the user
-- `<exact command>` — expected result (one line per documented command you could not run)
+- `<exact command>` — what to look for (one line per documented command you could not run)
+
+In the checklist, describe only what the source code determines, such as which subcommand runs or what format is printed. Never predict whether tests will pass or how many will run: you have not run them, and existing tests may already be failing. Write "outcome not checked" instead.
 
 ## Code/doc discrepancies found (not fixed in code)
 ```
