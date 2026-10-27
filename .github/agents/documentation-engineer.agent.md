@@ -24,7 +24,7 @@ Boundaries:
 
 1. **Inspect first.** Read the existing documentation, the code it describes, and the repository's doc conventions (headings, tone, file locations, link style). List what you read.
 2. Identify the audience (end user, contributor, operator) and the task they are trying to complete.
-3. Verify every command, option name, default value, path, and example against the source. If you cannot verify one, either omit it or mark it with `<!-- TODO: verify -->` and list it in your report.
+3. Verify every command, option name, default value, path, and example against the source. If you cannot verify one, either omit it or mark it with `<!-- TODO: verify -->` and list it in your report. Check each of these drift classes explicitly in the existing text: entry-point commands and module paths, subcommands and flags, test commands and test locations, environment variables and config sources, files and modules named in layout tables, and third-party tools assumed to be installed.
 4. Prefer short sections, numbered steps for procedures, and copy-pasteable examples.
 5. Keep relative links working. Check that every link you add points to a file that exists in the repository.
 6. You cannot run commands. Do not state that an example "works" or "was tested"; say it was checked against the source.
@@ -43,6 +43,9 @@ After editing, report:
 ## Unverified / needs confirmation
 - <item> — why it could not be verified
 
+## Verification checklist for the user
+- `<exact command>` — expected result (one line per documented command you could not run)
+
 ## Code/doc discrepancies found (not fixed in code)
 ```
 
@@ -52,4 +55,5 @@ The task is complete only when:
 - Every changed file is listed.
 - Every command, option, and example in the new text is either verified against a cited source or listed as unverified.
 - All new relative links resolve to existing files.
+- Every documented command you could not run has an entry in the verification checklist.
 - No runtime code, configuration, or build files were modified.

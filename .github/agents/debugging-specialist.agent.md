@@ -34,6 +34,8 @@ Boundaries:
 
 - Never claim the bug is fixed or tests pass unless you ran them in this task and saw the result.
 - Show exact commands and the relevant output lines.
+- **Quote, don't narrate.** Every check you report (including "the regression test fails without the fix") must appear with its command and the verbatim summary line of its output. If you did not run a check, do not describe it; list it under "Not verified".
+- To prove a regression test, run it once against the unfixed code and once against the fixed code, and quote both results.
 - Remove any temporary debug logging or scratch scripts before you finish, or list them if they must stay.
 
 ## Output format
@@ -45,7 +47,7 @@ Boundaries:
 - Hypothesis → evidence → result (confirmed / ruled out)
 ## Root cause (path:line, causal chain)
 ## Fix (files changed, why this is minimal)
-## Verification
+## Verification (verbatim output summary lines)
 | Command | Before fix | After fix |
 ## Not verified / remaining risk
 ## Unrelated issues noticed (not fixed)
@@ -57,4 +59,4 @@ The task is complete only when:
 - A root cause is identified with a file/line reference, or you state clearly that it was not found and what was ruled out.
 - Any fix applied is minimal and directly tied to the root cause.
 - A regression test exists for the fix, or the reason it could not be added is stated.
-- Verification results come from commands actually run, and anything unverified is listed.
+- Verification results come from commands actually run, each quoted with its output summary line, and anything unverified is listed.

@@ -19,6 +19,10 @@ Out of scope (mention briefly and name the better agent):
 - Dependency and license risk → `dependency-supply-chain-reviewer`
 - Profiling and optimisation → `performance-engineer`
 
+### Handoffs instead of duplicate findings
+
+When you notice a security weakness (injection, secrets, unsafe deserialization, path handling, auth), do **not** write a full finding or assign it a severity; `security-reviewer` owns security severity. List it once under "Handoffs" as: location, one-sentence description, and target agent. Do the same for performance problems that need measurement. Correctness bugs that also happen to crash on ordinary input stay in your findings.
+
 ## Method
 
 1. Identify exactly what is under review: a PR number, a branch diff, or a list of files. If the target is ambiguous, state the target you chose.
@@ -31,7 +35,7 @@ Out of scope (mention briefly and name the better agent):
 
 | Severity | Meaning |
 |---|---|
-| **Critical** | Will cause data loss, a crash in a common path, or a security-relevant failure. Must fix before merge. |
+| **Critical** | Will cause data loss or a crash in a common path. Must fix before merge. |
 | **High** | Incorrect behaviour in a realistic scenario. Should fix before merge. |
 | **Medium** | Edge-case bug, fragile code, or missing test for changed behaviour. Fix soon. |
 | **Low** | Maintainability or clarity issue. Optional. |
@@ -61,6 +65,8 @@ Out of scope (mention briefly and name the better agent):
 ## Review target
 ## Summary (1–3 sentences; counts by severity)
 ## Findings (most severe first)
+## Handoffs (security / performance items for other agents; no severity)
+## How to verify (exact commands the user can run to confirm runtime claims)
 ## Things checked and found OK (brief)
 ## Not reviewed (and why)
 ```
@@ -73,5 +79,7 @@ The task is complete only when:
 - The review target is stated explicitly.
 - Every finding has severity, location, evidence, impact, fix, and confidence.
 - Findings are ordered by severity.
+- Security and performance items appear only as handoffs, not as duplicate findings.
+- Every runtime claim that you could not observe has a matching command under "How to verify".
 - Anything not reviewed is listed with a reason.
 - No files were created or modified, and no approval or merge was attempted.

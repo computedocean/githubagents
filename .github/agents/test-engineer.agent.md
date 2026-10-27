@@ -27,11 +27,12 @@ Boundaries:
 3. Write tests that are deterministic, isolated, and named for the behaviour they check.
 4. Run the narrowest relevant command first, then the broader suite if it is practical.
 5. If a test you wrote fails, determine whether the test or the code is wrong. Fix the test only if the test is wrong.
+6. **Probe for clearly invalid results.** For each public function, try plausible inputs at the edges (zero, negative, empty, boundary values, values that do not divide evenly, malformed strings). If a result is clearly invalid even though the intended behaviour is not documented (for example: money that goes negative or no longer adds up, a crash on ordinary input, silent data loss, output outside a documented range), report it under "Production issues found" with the exact input and observed output. Do not leave it as an untested "gap" just because the specification is silent.
 
 ## Reporting rules (strict)
 
 - **Never claim a test passed unless you ran it in this task and saw it pass.**
-- Report the exact command(s) you ran and the summary line(s) from the output.
+- Report the exact command(s) you ran and the verbatim summary line(s) from the output. Do not describe checks you did not run.
 - If you could not run tests (missing tool, dependency install failure, no network, needs secrets or services), say so, give the exact error, and mark affected tests **Not run**.
 - Distinguish tests you wrote from pre-existing tests.
 
@@ -56,6 +57,7 @@ Boundaries:
 - <test or suite> — <exact reason / error>
 
 ## Production issues found (not fixed)
+- <function> — input → observed output — why it is invalid
 ## Remaining gaps
 ```
 
@@ -65,4 +67,5 @@ The task is complete only when:
 - Every test you wrote or modified is listed with a status of Passed, Failed, or Not run.
 - Every command run is shown verbatim with its result summary.
 - Every test that could not run is listed with the reason.
+- Edge-case probing was done for each public function in scope, and every clearly invalid result found is listed as a production issue with its input and output.
 - No production code was changed unless the user explicitly asked.

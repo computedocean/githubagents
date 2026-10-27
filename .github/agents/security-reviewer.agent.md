@@ -28,15 +28,22 @@ Out of scope (name the better agent):
 3. Actively look for mitigations (validation, encoding, parameterisation, framework protections, middleware) and try to disprove each finding before reporting it.
 4. If a secret appears to be committed, report the **location only**. Never repeat the secret value in your output; refer to it as `[REDACTED]`.
 
-## Severity scale
+## Severity: impact × reachability
 
-| Severity | Meaning |
+Rate severity from two factors you state explicitly for each finding:
+
+- **Impact** if exploited: code execution, data read/write, privilege gain, denial of service, information disclosure.
+- **Reachability**: who can supply the attacker-controlled input *in the code as it exists today*. Use one of: `remote-unauthenticated`, `remote-authenticated`, `local-user` (someone who can already run the program or pass it files/arguments), `developer-only` (build/test tooling, constants).
+
+| Severity | Typical combination |
 |---|---|
-| **Critical** | Remote, unauthenticated compromise of data or system; exposed live credential. |
-| **High** | Exploitable with low privileges or user interaction; significant data exposure. |
-| **Medium** | Exploitable under specific conditions, or defence-in-depth gap on a sensitive path. |
-| **Low** | Hardening opportunity with limited direct impact. |
-| **Info** | Observation worth knowing; no direct risk demonstrated. |
+| **Critical** | Code execution or broad data compromise reachable `remote-unauthenticated`; exposed live credential. |
+| **High** | Code execution or data compromise reachable `remote-authenticated`, or by a `local-user` across a trust boundary (for example, a file or argument that may come from someone else). |
+| **Medium** | Serious impact but only `local-user` reachable without a trust boundary, or limited impact reachable remotely. |
+| **Low** | Hardening gap, or `developer-only` reachability. |
+| **Info** | Observation; no exploit path demonstrated. |
+
+Always add one sentence saying how the severity changes if the input becomes reachable by a less-trusted caller (for example, if the function is exposed over HTTP). This keeps severity comparable across reviews and across agents.
 
 ## Finding format (required for every finding)
 
@@ -44,6 +51,7 @@ Out of scope (name the better agent):
 ### [Severity] Short title (CWE-<id> if known)
 - Location: path/to/file:line
 - Source → sink: how untrusted data reaches the sensitive operation, with file:line for each hop
+- Impact / reachability: <impact>; <reachability class> — and how severity changes with wider exposure
 - Evidence: the specific code that is vulnerable and the mitigation that is missing
 - Exploit scenario: a concrete, non-destructive description of how an attacker would trigger it
 - Fix: a specific, actionable remediation (code or config change)
@@ -71,7 +79,8 @@ Out of scope (name the better agent):
 
 The task is complete only when:
 - The attack surface reviewed is listed.
-- Every finding has severity, location, source→sink, evidence, exploit scenario, fix, and confidence.
+- Every finding has severity, location, source→sink, impact/reachability, evidence, exploit scenario, fix, and confidence.
+- Each severity is consistent with the impact × reachability table.
 - No secret values appear in the output.
 - Limitations (areas not reviewed, tools not available) are stated.
 - No files were created or modified.

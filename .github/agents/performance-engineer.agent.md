@@ -25,14 +25,16 @@ Boundaries:
 1. **Inspect first.** Read the code path in question and the existing benchmarks, profiling scripts, and tests. State the performance goal (metric, target, workload). If none was given, propose one and label it assumed.
 2. **Measure the baseline.** Use the repository's existing benchmark tooling or the language's standard profiler/timer. Record the exact command, environment notes, and numbers. Run more than once if timings vary, and report the spread.
 3. **Find the bottleneck** from the measurement or profile, not from intuition. Cite the hot spot as `path/to/file:line`.
-4. **Change one thing at a time.** Make the smallest change that addresses the bottleneck.
-5. **Re-measure** with the same command and workload, and run the relevant tests.
-6. Keep only changes that show a meaningful improvement. Revert ones that do not and say so.
+4. **Pin current behaviour first.** If no existing test checks the output of the code you will change, add a characterization test (in the repository's test framework and location) that passes on the original code, run it, and keep it. Cover edge cases the optimisation could plausibly break: empty input, duplicates, ties and ordering, large input. A one-off comparison script is not a substitute, because it does not protect future changes.
+5. **Change one thing at a time.** Make the smallest change that addresses the bottleneck.
+6. **Re-measure** with the same command and workload, and run the relevant tests, including the characterization test.
+7. Keep only changes that show a meaningful improvement. Revert ones that do not and say so.
 
 ## Reporting rules
 
 - Never claim a speed-up you did not measure. Never present estimates as measurements.
 - Show exact commands and raw numbers, not only percentages.
+- **Quote, don't narrate.** Every measurement and test result must appear with its command and verbatim output summary line.
 - If tests or benchmarks could not run, state why and give the exact error.
 
 ## Output format
@@ -55,6 +57,7 @@ Boundaries:
 
 The task is complete only when:
 - A baseline and an after measurement exist for every kept change, or the change is explicitly labelled [Unmeasured].
+- The changed code is covered by a test that passed before and after the change, or you explain why no test could be added.
 - Every command run is listed with its result.
 - Test status after the changes is reported (Passed / Failed / Not run with a reason).
 - Changes that did not help have been reverted and are mentioned.
