@@ -9,6 +9,8 @@ Each agent has one job, explicit boundaries, the fewest tools that job needs, an
 | File | Purpose |
 |---|---|
 | [.github/agents/](.github/agents/) | The ten agent profiles (`*.agent.md`) |
+| [evals/](evals/README.md) | Repeatable evaluation procedure, scoring rubric, and task prompts for measuring agent quality (no answer keys) |
+| [scripts/test_validate_agents.py](scripts/test_validate_agents.py) | Unit tests for the validator: `python -m unittest discover -s scripts -v` |
 | [scripts/validate_agents.py](scripts/validate_agents.py) | Checks profile frontmatter and Markdown against GitHub's documented format and this library's rules (standard-library Python) |
 | `README.md` | This guide |
 
