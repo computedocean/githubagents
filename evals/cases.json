@@ -1,0 +1,228 @@
+[
+  {
+    "id": "S-research",
+    "agent": "research-analyst",
+    "fixture": "S: small standard-library Python app with tests (kept local; see evals/README.md)",
+    "prompt": "Three questions about this repo: (1) How does scripts/validate_agents.py decide whether a tool name in an agent profile is valid? (2) What does GitHub actually do when a custom agent profile lists a tool name it doesn't recognise, and which tool aliases don't apply to the Copilot cloud agent? (3) Which module in app/ converts prices between currencies, and what exchange-rate source does it use?",
+    "acceptance_criteria": [
+      "Each of the three questions is answered or explicitly marked unresolved",
+      "Every [Verified] claim cites a path:line or URL that exists and supports it",
+      "No answer is invented: anything not found in a source is reported as not found",
+      "The worktree has no changes after the run"
+    ],
+    "proxy_status": "passed",
+    "agents_tab_status": "not run"
+  },
+  {
+    "id": "S-architect",
+    "agent": "software-architect",
+    "fixture": "S",
+    "prompt": "We want this shop app to serve multiple concurrent users through an HTTP API, with data that survives restarts. Assess the current architecture and recommend how to get there.",
+    "acceptance_criteria": [
+      "Lists the files inspected, and its description of the current state matches the code",
+      "Compares at least two options on the same criteria",
+      "Recommends one option and includes an ADR (context, decision, consequences)",
+      "Labels assumptions and lists them as open questions",
+      "The worktree has no changes after the run"
+    ],
+    "proxy_status": "passed",
+    "agents_tab_status": "not run"
+  },
+  {
+    "id": "S-planner",
+    "agent": "implementation-planner",
+    "fixture": "S",
+    "prompt": "Plan adding a `report top-customers` subcommand to the CLI that prints the top N customers by spend, with an optional --csv flag.",
+    "acceptance_criteria": [
+      "Lists the code inspected, and every file named in the plan exists or is explicitly new",
+      "Every step names files, the change, a verification command, and its dependencies",
+      "Missing inputs the feature depends on are raised as open questions",
+      "Every acceptance criterion maps to a step or a test",
+      "The worktree has no changes after the run"
+    ],
+    "proxy_status": "passed",
+    "agents_tab_status": "not run"
+  },
+  {
+    "id": "S-code-review",
+    "agent": "code-reviewer",
+    "fixture": "S",
+    "prompt": "Review the sample shop app on this branch, everything under app/ and tests/.",
+    "acceptance_criteria": [
+      "States the review target explicitly",
+      "Every finding has severity, path:line, evidence, impact, fix, and confidence",
+      "Security and performance items appear only under Handoffs, with no severity",
+      "Every runtime claim has a command under 'How to verify'",
+      "The worktree has no changes after the run"
+    ],
+    "proxy_status": "passed",
+    "agents_tab_status": "not run"
+  },
+  {
+    "id": "S-security",
+    "agent": "security-reviewer",
+    "fixture": "S",
+    "prompt": "Do a security review of this repository's application code.",
+    "acceptance_criteria": [
+      "Lists the attack surface and entry points reviewed",
+      "Every finding has a source-to-sink trace with path:line for each hop",
+      "Every finding states impact and reachability, and its severity matches the profile's table",
+      "No secret value appears in the output",
+      "The worktree has no changes after the run"
+    ],
+    "proxy_status": "passed",
+    "agents_tab_status": "not run"
+  },
+  {
+    "id": "S-debug",
+    "agent": "debugging-specialist",
+    "fixture": "S",
+    "prompt": "Two tests in tests/test_orders.py are failing. Find out why and fix it.",
+    "acceptance_criteria": [
+      "The full test suite passes when re-run independently after the change",
+      "A new regression test fails on the original code and passes on the fixed code",
+      "The diff touches only the root-cause lines and test files",
+      "Every verification claim quotes a command and its verbatim result line"
+    ],
+    "proxy_status": "passed",
+    "agents_tab_status": "not run"
+  },
+  {
+    "id": "S-performance",
+    "agent": "performance-engineer",
+    "fixture": "S",
+    "prompt": "`python -m app.bench` is too slow. Make the code it exercises faster and show me the numbers.",
+    "acceptance_criteria": [
+      "Reports baseline and after measurements, with the commands used",
+      "The optimized function returns identical output to the original on generated inputs",
+      "A test covering the changed code exists and passes on both the original and the new code",
+      "Pre-existing test failures are reported as pre-existing, not hidden or 'fixed'"
+    ],
+    "proxy_status": "passed",
+    "agents_tab_status": "not run"
+  },
+  {
+    "id": "S-test",
+    "agent": "test-engineer",
+    "fixture": "S",
+    "prompt": "Find the coverage gaps in app/ and add tests for the untested behaviour. Don't change production code.",
+    "acceptance_criteria": [
+      "No production files change (only test files are added or modified)",
+      "Reported test counts match an independent re-run of the suite",
+      "Every test written is listed with a status",
+      "Clearly invalid outputs found while probing are reported as production issues, with input and output"
+    ],
+    "proxy_status": "passed",
+    "agents_tab_status": "not run"
+  },
+  {
+    "id": "D-dependencies",
+    "agent": "dependency-supply-chain-reviewer",
+    "fixture": "D: case S plus dependency manifests, a CI workflow, and a Dockerfile (kept local; contains deliberately unsafe CI configuration)",
+    "prompt": "Audit this repository's dependencies, CI workflow, and container build for supply-chain risk.",
+    "acceptance_criteria": [
+      "The inventory lists every manifest, lockfile, workflow, and Dockerfile present",
+      "Every advisory claim cites an advisory ID and URL, or is labelled [Unverified]",
+      "Every cited advisory ID and fixed version matches the advisory database when checked",
+      "No package manager was run, and the worktree has no changes after the run"
+    ],
+    "proxy_status": "passed",
+    "agents_tab_status": "not run"
+  },
+  {
+    "id": "Doc-drift",
+    "agent": "documentation-engineer",
+    "fixture": "Doc: case S with an out-of-date app/README.md (kept local)",
+    "prompt": "app/README.md seems out of date. Bring it in line with the code, and add a short configuration reference section for the settings in app/config.py.",
+    "acceptance_criteria": [
+      "Only documentation files change",
+      "Every command in the new README works when run independently",
+      "No secret value appears in the new text",
+      "The verification checklist does not predict test outcomes"
+    ],
+    "proxy_status": "passed",
+    "agents_tab_status": "not run"
+  },
+  {
+    "id": "H-code-review",
+    "agent": "code-reviewer",
+    "fixture": "H: held-out standard-library package with different defect types (kept local)",
+    "prompt": "Review the ledger package on this branch, everything under ledger/ and tests/.",
+    "acceptance_criteria": [
+      "Every finding has severity, path:line, evidence, impact, fix, and confidence",
+      "Security and performance items appear only under Handoffs, with no severity",
+      "Every runtime claim has a command under 'How to verify'",
+      "The worktree has no changes after the run"
+    ],
+    "proxy_status": "passed",
+    "agents_tab_status": "not run"
+  },
+  {
+    "id": "H-security",
+    "agent": "security-reviewer",
+    "fixture": "H",
+    "prompt": "Do a security review of this repository's application code.",
+    "acceptance_criteria": [
+      "Every finding has a source-to-sink trace and states impact and reachability",
+      "Severities are consistent with the profile's impact x reachability table",
+      "No secret value appears in the output",
+      "The worktree has no changes after the run"
+    ],
+    "proxy_status": "passed",
+    "agents_tab_status": "not run"
+  },
+  {
+    "id": "H-debug",
+    "agent": "debugging-specialist",
+    "fixture": "H",
+    "prompt": "A test in tests/test_ledger.py is failing. Find out why and fix it.",
+    "acceptance_criteria": [
+      "The full test suite passes when re-run independently after the change",
+      "The regression test's inputs fail on the original code",
+      "Red and green results are quoted verbatim with their commands"
+    ],
+    "proxy_status": "passed",
+    "agents_tab_status": "not run"
+  },
+  {
+    "id": "H-performance",
+    "agent": "performance-engineer",
+    "fixture": "H",
+    "prompt": "`python -m ledger.bench` is too slow. Make the code it exercises faster and show me the numbers.",
+    "acceptance_criteria": [
+      "Reports baseline and after measurements, with the commands used",
+      "Output is identical to the original on generated inputs, including ties and ordering",
+      "A characterization test exists and passes on both the original and the new code"
+    ],
+    "proxy_status": "passed",
+    "agents_tab_status": "not run"
+  },
+  {
+    "id": "H-test",
+    "agent": "test-engineer",
+    "fixture": "H",
+    "prompt": "Find the coverage gaps in ledger/ and add tests for the untested behaviour. Don't change production code.",
+    "acceptance_criteria": [
+      "No production files change",
+      "Reported test counts match an independent re-run",
+      "Clearly invalid outputs are reported as production issues, with input and output",
+      "Known-bug tests do not leave the suite red without being marked or reported"
+    ],
+    "proxy_status": "passed",
+    "agents_tab_status": "not run"
+  },
+  {
+    "id": "H-docs",
+    "agent": "documentation-engineer",
+    "fixture": "H",
+    "prompt": "ledger/README.md seems out of date. Bring it in line with the code, and add a short configuration reference section for the settings in ledger/config.py.",
+    "acceptance_criteria": [
+      "Only documentation files change",
+      "Every drift class in the profile was checked",
+      "No secret value appears in the new text",
+      "The verification checklist does not predict test outcomes"
+    ],
+    "proxy_status": "passed",
+    "agents_tab_status": "not run"
+  }
+]
